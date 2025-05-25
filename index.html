@@ -5,16 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Esraa Hamdi Science Video</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
       height: 100%;
       background-color: black;
       overflow: hidden;
     }
+    #startScreen {
+      position: fixed;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: sans-serif;
+    }
+    #startScreen button {
+      padding: 1em 2em;
+      font-size: 1.2em;
+      background-color: #00aaff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
     video {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       object-fit: cover;
@@ -22,26 +48,38 @@
   </style>
 </head>
 <body>
-  <video 
+
+  <div id="startScreen">
+    <h1>اضغط لبدء الفيديو</h1>
+    <button onclick="startVideo()">تشغيل</button>
+  </div>
+
+  <video
+    id="mainVideo"
     src="https://iarashed.github.io/science-eh/Esraa_Hamdi_science.mp4"
-    autoplay
     playsinline
-    muted
     controls
     disablePictureInPicture
     controlsList="nodownload nofullscreen noremoteplayback"
   ></video>
 
   <script>
-    // محاولة تفعيل ملء الشاشة تلقائيًا
-    const video = document.querySelector('video');
-    video.addEventListener('canplay', () => {
+    const video = document.getElementById('mainVideo');
+    const startScreen = document.getElementById('startScreen');
+
+    function startVideo() {
+      startScreen.style.display = 'none';
       video.play();
-      const requestFullScreen = video.requestFullscreen || video.webkitRequestFullscreen || video.msRequestFullscreen;
+
+      const requestFullScreen =
+        video.requestFullscreen ||
+        video.webkitRequestFullscreen ||
+        video.msRequestFullscreen;
       if (requestFullScreen) {
         requestFullScreen.call(video).catch(() => {});
       }
-    });
+    }
   </script>
+
 </body>
 </html>
